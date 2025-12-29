@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.jaya.offlinetracking.repository.LocationRepository
 import com.jaya.offlinetracking.room.AppDatabase
+import com.jaya.offlinetracking.util.LocationApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

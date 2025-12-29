@@ -3,6 +3,7 @@ package com.jaya.offlinetracking.repository
 import com.jaya.offlinetracking.model.LocationEntity
 import com.jaya.offlinetracking.model.toDto
 import com.jaya.offlinetracking.room.LocationDao
+import com.jaya.offlinetracking.util.LocationApi
 import kotlinx.coroutines.flow.Flow
 
 class LocationRepository(

@@ -1,10 +1,9 @@
 package com.jaya.offlinetracking
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
 import com.jaya.offlinetracking.ui.theme.OfflineTrackingTheme
 import com.jaya.offlinetracking.util.NetworkMonitor
 import com.jaya.offlinetracking.viewmodel.MainViewModel
@@ -28,6 +28,7 @@ import com.jaya.offlinetracking.viewmodel.MainViewModelFactory
 
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val app = application as LocationApp
@@ -36,9 +37,16 @@ class MainActivity : ComponentActivity() {
             repository = app.repository,
             networkMonitor = NetworkMonitor(this)
         )
+        val viewModel: MainViewModel by lazy {
+            ViewModelProvider(
+                this,
+                viewModelFactory
+            )[MainViewModel::class.java]
+        }
+
 
         setContent {
-            val viewModel: MainViewModel =  viewModel(factory = viewModelFactory)
+           // val viewModel: MainViewModel =  viewModel(factory = viewModelFactory)
 
 
             MainScreen(viewModel)
@@ -52,6 +60,7 @@ fun MainScreen(viewModel: MainViewModel) {
     val context = LocalContext.current
     val pending by viewModel.pendingCount.collectAsState()
     val online by viewModel.isOnline.collectAsState()
+    Log.d("NetworkMonitor", "online status:: "+online +" Pending "+pending)
 
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
